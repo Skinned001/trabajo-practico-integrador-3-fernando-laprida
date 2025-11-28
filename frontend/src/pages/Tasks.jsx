@@ -63,7 +63,6 @@ export const Tasks = () => {
             </a>
           </div>
 
-          {/* NO TASKS */}
           {Tasks.length === 0 ? (
             <p className="text-center text-gray-600 text-lg font-medium">
               El usuario no tiene ninguna tarea.
@@ -86,7 +85,6 @@ export const Tasks = () => {
 
                     <p className="text-gray-700">{task.description}</p>
 
-                    {/* BADGE DE ESTADO */}
                     <span
                       className={`inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium ${
                         task.is_completed
