@@ -121,7 +121,7 @@ export const Home = () => {
         {tasks.length === 0 && (
           <div className="bg-white shadow-sm p-5 rounded-xl border-0 text-center">
             <h3 className="text-base font-semibold mb-2" style={{ color: '#212529' }}>
-              🎉 ¡Bienvenido!
+             ¡Bienvenido!
             </h3>
             <p className="text-sm" style={{ color: '#6c757d' }}>
               Crea tu primera tarea para comenzar.
