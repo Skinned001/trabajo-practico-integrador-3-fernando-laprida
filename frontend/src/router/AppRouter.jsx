@@ -1,28 +1,29 @@
-import { Navigate, Route, Routes } from "react-router";
-import { Login } from "../pages/Login";
-import { Register } from "../pages/Register";
-import { Home } from "../pages/Home";
-import { PrivateRoute } from "./PrivateRoute";
-import { PublicRoute } from "./PublicRoute";
-import { Profile } from "../pages/Profile";
-import { Tasks } from "../pages/Tasks";
-import { CreateTask } from "../pages/CreateTask";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { PublicRoutes } from "./PublicRoutes.jsx";
+import { PrivateRoutes } from "./PrivateRoutes.jsx";
+import { Login } from "../pages/Login.jsx";
+import { Register } from "../pages/Register.jsx";
+import { Profile } from "../pages/Profile.jsx";
+import { Home } from "../pages/Home.jsx";
+import { Tasks } from "../pages/Tasks.jsx";
 
-export const AppRouter = ({ authStatus }) => {
+export const AppRouter = () => {
   return (
     <Routes>
-      <Route element={<PublicRoute authPublic={authStatus} />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+      <Route element={<PublicRoutes />}>
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="" element={<Navigate to="/Login" />} />
+        <Route path="/" element={<Navigate to="/Login" />} />
       </Route>
-      <Route element={<PrivateRoute authPrivate={authStatus} />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/createTask" element={<CreateTask />} />
-      </Route>
+      <Route element={<PrivateRoutes />}>
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Tasks" element={<Tasks />} />
+        <Route path="/Profile" element={<Profile />} />
 
-      <Route path="*" element={<Navigate to="/home" />} />
+        <Route path="" element={<Navigate to="/Home" />} />
+        <Route path="/" element={<Navigate to="/Home" />} />
+      </Route>
     </Routes>
   );
 };

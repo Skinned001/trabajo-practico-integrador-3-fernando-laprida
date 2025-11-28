@@ -1,60 +1,66 @@
-import { Link } from "react-router";
-import { Logout } from "./Logout";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+  const IsLogged = localStorage.getItem("isLogged");
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLogged");
+    navigate("/login");
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg codec-navbar">
-      <div className="container-fluid">
-        <Link className="navbar-brand codec-navbar-brand" to="/home">
-          HOME
-        </Link>
+    <nav className="w-full bg-white shadow-md px-6 py-3 flex justify-between items-center">
+      <h1 className="text-xl font-semibold text-gray-800">TaskManager</h1>
 
-        <button
-          className="navbar-toggler codec-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#codecNav"
-        >
-          <span className="navbar-toggler-icon codec-toggler-icon"></span>
-        </button>
+      <div className="flex gap-4">
+        {IsLogged ? (
+          <>
+            <Link
+              to="/Home"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
+              Home
+            </Link>
 
-        <div className="collapse navbar-collapse" id="codecNav">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className="nav-link codec-link" to="/register">
-                Registrarse
-              </Link>
-            </li>
+            <Link
+              to="/Tasks"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
+              Tasks
+            </Link>
 
-            <li className="nav-item">
-              <Link className="nav-link codec-link" to="/login">
-                Iniciar Sesión
-              </Link>
-            </li>
+            <Link
+              to="/Profile"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
+              Profile
+            </Link>
 
-            <li className="nav-item">
-              <Link className="nav-link codec-link" to="/profile">
-                Perfil
-              </Link>
-            </li>
+            <button
+              onClick={handleLogout}
+              className="text-red-600 hover:text-red-700 font-medium transition"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/Login"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
+              Login
+            </Link>
 
-            <li className="nav-item">
-              <Link className="nav-link codec-link" to="/tasks">
-                Tareas
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link codec-link" to="/createTask">
-                Crear Tarea
-              </Link>
-            </li>
-          </ul>
-
-          <div>
-            <Logout />
-          </div>
-        </div>
+            <Link
+              to="/Register"
+              className="text-gray-700 hover:text-blue-600 transition"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
