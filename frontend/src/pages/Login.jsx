@@ -24,8 +24,8 @@ export const Login = () => {
       });
       console.log(res)
       const data = await res.json();
-      if (!data) {
-        return alert(data.message), handleReset();
+      if (!res.ok) {
+        return alert(data.message),setloading(false), handleReset();
       }
       await new Promise((resolver) => setTimeout(resolver, 2000)),
         setloading(false);
@@ -37,78 +37,112 @@ export const Login = () => {
     }
   };
   return (
-    <main className="min-h-screen flex flex-col justify-between bg-gray-100">
+    <main className="min-vh-100 d-flex flex-column justify-content-between" 
+          style={{ backgroundColor: '#f8f9fa' }}>
       {loading ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="d-flex justify-content-center align-items-center vh-100">
           <Loading />
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center px-4 flex-1">
-          <form
-            onSubmit={handleLogin}
-            className="w-full max-w-sm bg-white p-6 rounded-2xl shadow-md space-y-4"
-          >
-            <h1 className="text-2xl font-semibold text-center text-gray-800">
-              Iniciar Sesión
-            </h1>
+        <div className="d-flex flex-column justify-content-center align-items-center px-3 flex-grow-1">
+          {/* Card del formulario con bordes y sombra */}
+          <div className="card border-0 shadow-lg rounded-4" 
+               style={{ 
+                 maxWidth: '420px', 
+                 width: '100%',
+                 border: '2px solid #ff6b35 !important'
+               }}>
+            <div className="card-body p-4 p-md-5">
+              <form onSubmit={handleLogin}>
+                {/* Título */}
+                <div className="text-center mb-4">
+                  <h1 className="h2 fw-bold mb-2" style={{ color: '#212529' }}>
+                    Iniciar Sesión
+                  </h1>
+                  <p className="text-muted">Ingresa a tu cuenta</p>
+                </div>
 
-            {/* USERNAME */}
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="username" className="text-gray-700 font-medium">
-                Usuario
-              </label>
-              <input
-                id="username"
-                type="text"
-                name="username"
-                placeholder="nombre de usuario"
-                value={formState.username}
-                onChange={handleChange}
-                required
-                className="border rounded-lg px-3 py-2 outline-none
-              focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
+                {/* USERNAME */}
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label fw-semibold" style={{ color: '#212529' }}>
+                    Usuario
+                  </label>
+                  <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    placeholder="Nombre de usuario"
+                    value={formState.username}
+                    onChange={handleChange}
+                    required
+                    className="form-control form-control-lg border-1"
+                    style={{ 
+                      borderColor: '#dee2e6',
+                      backgroundColor: '#ffffff'
+                    }}
+                  />
+                </div>
+
+                {/* PASSWORD */}
+                <div className="mb-4">
+                  <label htmlFor="password" className="form-label fw-semibold" style={{ color: '#212529' }}>
+                    Contraseña
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    placeholder="Ingresa tu contraseña"
+                    value={formState.password}
+                    onChange={handleChange}
+                    required
+                    className="form-control form-control-lg border-1"
+                    style={{ 
+                      borderColor: '#dee2e6',
+                      backgroundColor: '#ffffff'
+                    }}
+                  />
+                </div>
+
+                {/* Botón de envío */}
+                <button
+                  type="submit"
+                  className="btn w-100 py-3 fw-bold text-white border-0 rounded-3"
+                  style={{
+                    backgroundColor: '#ff6b35',
+                    fontSize: '1.1rem',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseOver={(e) => {
+                    e.target.style.backgroundColor = '#e55a2b';
+                    e.target.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.target.style.backgroundColor = '#ff6b35';
+                    e.target.style.transform = 'translateY(0)';
+                  }}
+                >
+                  Iniciar sesión
+                </button>
+
+                {/* Enlace de registro */}
+                <div className="text-center mt-4 pt-3 border-top" style={{ borderColor: '#e9ecef' }}>
+                  <p className="text-muted mb-0">
+                    ¿No tienes cuenta?
+                    <a
+                      href="/Register"
+                      className="text-decoration-none fw-bold ms-1"
+                      style={{ color: '#ff6b35' }}
+                      onMouseOver={(e) => e.target.style.color = '#e55a2b'}
+                      onMouseOut={(e) => e.target.style.color = '#ff6b35'}
+                    >
+                      Regístrate aquí
+                    </a>
+                  </p>
+                </div>
+              </form>
             </div>
-
-            {/* PASSWORD */}
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="password" className="text-gray-700 font-medium">
-                Contraseña
-              </label>
-              <input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="aquí coloca tu contraseña"
-                value={formState.password}
-                onChange={handleChange}
-                required
-                className="border rounded-lg px-3 py-2 outline-none
-              focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              />
-            </div>
-
-            {/* SUBMIT BUTTON */}
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-lg
-            hover:bg-blue-700 transition font-medium mt-2
-            disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              Iniciar sesión
-            </button>
-
-            {/* REGISTER LINK */}
-            <p className="text-center text-gray-600 text-sm">
-              ¿No tienes cuenta?
-              <a
-                href="/Register"
-                className="text-blue-600 hover:underline ml-1"
-              >
-                Registrarte
-              </a>
-            </p>
-          </form>
+          </div>
         </div>
       )}
 
